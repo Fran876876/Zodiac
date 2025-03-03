@@ -7,7 +7,7 @@ class Horoscope (
     val icon: Int)
     {
 
-
+    //metodo abstracto??
     companion object {
 
         val horoscopeList = listOf(
