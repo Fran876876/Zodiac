@@ -5,14 +5,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.motion.widget.MotionScene.Transition.TransitionOnClick
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 
-class HoroscopeAdapter(val items: List<Horoscope>) : Adapter<HoroscopeViewHolder>() {
+
+// la clase HoroscopeAdapter extiende de ADAPTER, es un adaptador que se encagará de manejar una lista de elementos de tipo HOROSCOPE
+//  y de crear y enlazar vistas para cada uno de esos elementos.
+
+
+
+
+
+
+
+class HoroscopeAdapter(val items: List<Horoscope>, val onClick : (Int) -> Unit) : Adapter<HoroscopeViewHolder>() {
 
     override fun onBindViewHolder(holder: HoroscopeViewHolder, position: Int) {
         val horoscope = items[position]
         holder.render(horoscope)
+
+        holder.itemView.setOnClickListener{
+            onClick(position)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HoroscopeViewHolder {
@@ -37,3 +52,6 @@ class HoroscopeViewHolder(view: View) : ViewHolder(view) {
         dateTextView.setText(horoscope.dates)
     }
 }
+
+
+

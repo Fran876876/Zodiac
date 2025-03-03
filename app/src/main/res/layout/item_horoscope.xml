@@ -21,7 +21,7 @@
                android:id="@+id/nameTextView"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:text="@string/horoscope_name_aries"
+               android:text="Nombre"
                android:textSize="24sp"
                android:textStyle="bold"/>
 
@@ -29,7 +29,7 @@
                 android:id="@+id/dateTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/horoscope_date_aries"
+                android:text="Fechas"
                 android:textSize="18sp"/>
 
 
