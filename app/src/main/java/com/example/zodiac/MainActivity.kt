@@ -2,6 +2,9 @@ package com.example.zodiac
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -48,4 +51,28 @@ class MainActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,
             false)
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_detail, menu)
+
+        val menuItem = menu?.findItem(R.id.action_search)
+        val searchView = menuItem?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean{
+                Log.i("Menu", "He pulsado Enter")
+                return false
+            }
+
+            override fun onQueryTextChange(s: String): Boolean {
+              Log.i("Menu", s)
+                return false
+            }
+
+        })
+        return true
+    }
+
+
 }
+

@@ -1,6 +1,9 @@
 package com.example.zodiac
 
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -24,10 +27,47 @@ class DetailActivity : AppCompatActivity() {
             insets
         }
 
-        val id = intent.getStringExtra(EXTRA_HOROSCOPE_ID)
+        val id = intent.getStringExtra(EXTRA_HOROSCOPE_ID)!!
+        horoscope = Horoscope.findById(id)
 
+        initView()
 
-        val horoscope = Horoscope.findById(id)
-        findViewById<TextView>(R.id.text).text = "id: ${getString(horoscope.name)}"
+        loadData()
     }
+      //  findViewById<TextView>(R.id.text).text = "id: ${getString(horoscope.name)}"
+
+        override fun onCreateOptionsMenu(menu: Menu?): Boolean{
+            menuInflater.inflate(R.menu_activity_detail, menu)
+            return true
+        }
+
+        override fun onOptionsItemSelectec(item: MenuItem): Boolean{
+            return when (item.itemId){
+                R.id.action_favorite -> {
+                    Log.i("MENU","Menu favorito")
+                    true
+                }
+                R.id.action_share -> {
+                    Log.i("MENU", "Menu compartir")
+                    true
+                }
+                else -> super.onOptionsItemSelected(item)
+            }
+        }
+
+    private fun loadData(){
+        supportActionBar?.setTitle(horoscope.name)
+        supportActionBar?.setSubtitle(horoscope.dates)
+
+        nameTextView.setText(horoscope.name)
+        dateTextView.setText(horoscope.dates)
+        iconImageView.setImageResource(horoscope.icon)
+    }
+
+    private fun initView(){
+        nameTextView = findViewById(R.id.nameTextView)
+        dateTextView = findViewById(R.id.iconImageView)
+    }
+
+
 }
