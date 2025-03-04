@@ -26,6 +26,7 @@ class DetailActivity : AppCompatActivity() {
 
         val id = intent.getStringExtra(EXTRA_HOROSCOPE_ID)
 
+        // comentario de mierda para hacer commit
 
         val horoscope = Horoscope.findById(id)
         findViewById<TextView>(R.id.text).text = "id: ${getString(horoscope.name)}"
