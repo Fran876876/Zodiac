@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,11 @@ class DetailActivity : AppCompatActivity() {
     companion object{
         const val EXTRA_HOROSCOPE_ID = "HOROSCOPE"
     }
+    lateinit var nameTextView: TextView
+    lateinit var dateTextView: TextView
+    lateinit var iconImageView: ImageView
+
+    lateinit var horoscope: Horoscope
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,11 +43,11 @@ class DetailActivity : AppCompatActivity() {
       //  findViewById<TextView>(R.id.text).text = "id: ${getString(horoscope.name)}"
 
         override fun onCreateOptionsMenu(menu: Menu?): Boolean{
-            menuInflater.inflate(R.menu_activity_detail, menu)
+            menuInflater.inflate(R.menu.menu_activity_detail, menu)
             return true
         }
 
-        override fun onOptionsItemSelectec(item: MenuItem): Boolean{
+        override fun onOptionsItemSelected(item: MenuItem): Boolean{
             return when (item.itemId){
                 R.id.action_favorite -> {
                     Log.i("MENU","Menu favorito")
