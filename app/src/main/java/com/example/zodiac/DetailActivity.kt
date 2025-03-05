@@ -1,5 +1,6 @@
 package com.example.zodiac
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -21,15 +22,14 @@ class DetailActivity : AppCompatActivity() {
     lateinit var iconImageView: ImageView
 
     lateinit var horoscope: Horoscope
+    var isFavorite = false
+    lateinit var favoriteMenu: MenuItem
+
+    lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
-
-
-        //comentario verga de committario
-    //comentario verga 2
 
 
         setContentView(R.layout.activity_detail)
@@ -38,6 +38,8 @@ class DetailActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        session = SessionManager(this)
 
         val id = intent.getStringExtra(EXTRA_HOROSCOPE_ID)!!
         horoscope = Horoscope.findById(id)
@@ -48,24 +50,39 @@ class DetailActivity : AppCompatActivity() {
     }
       //  findViewById<TextView>(R.id.text).text = "id: ${getString(horoscope.name)}"
 
-        override fun onCreateOptionsMenu(menu: Menu?): Boolean{
+        override fun onCreateOptionsMenu(menu: Menu): Boolean{
             menuInflater.inflate(R.menu.menu_activity_detail, menu)
+
+            favoriteMenu = menu.findItem(R.id.action_favorite)
+            setFavoriteIcon()
             return true
         }
 
-        override fun onOptionsItemSelected(item: MenuItem): Boolean{
-            return when (item.itemId){
-                R.id.action_favorite -> {
-                    Log.i("MENU","Menu favorito")
-                    true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_favorite -> {
+                isFavorite = !isFavorite
+                if (isFavorite) {
+                    session.setFavorite(horoscope.id)
+                } else {
+                    session.setFavorite("")
                 }
-                R.id.action_share -> {
-                    Log.i("MENU", "Menu compartir")
-                    true
-                }
-                else -> super.onOptionsItemSelected(item)
+                setFavoriteIcon()
+                true
             }
+            R.id.action_share -> {
+                val sendIntent = Intent()
+                sendIntent.setAction(Intent.ACTION_SEND)
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "This is my text to send.")
+                sendIntent.setType("text/plain")
+
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                startActivity(shareIntent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
+    }
 
     private fun loadData(){
         supportActionBar?.setTitle(horoscope.name)
@@ -79,7 +96,14 @@ class DetailActivity : AppCompatActivity() {
     private fun initView(){
         nameTextView = findViewById(R.id.nameTextView)
         dateTextView = findViewById(R.id.iconImageView)
+        iconImageView = findViewById(R.id.iconImageView)
     }
-
+    private fun setFavoriteIcon() {
+        if (isFavorite) {
+            favoriteMenu.setIcon(R.drawable.ic_favorite_selected)
+        } else {
+            favoriteMenu.setIcon(R.drawable.ic_favorite)
+        }
+    }
 
 }
