@@ -29,7 +29,7 @@ class DetailActivity : AppCompatActivity() {
 
 
         //comentario verga de committario
-
+    //comentario verga 2
 
 
         setContentView(R.layout.activity_detail)
