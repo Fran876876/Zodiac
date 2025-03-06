@@ -91,6 +91,8 @@ class DetailActivity : AppCompatActivity() {
         nameTextView.setText(horoscope.name)
         dateTextView.setText(horoscope.dates)
         iconImageView.setImageResource(horoscope.icon)
+
+        isFavorite = session.isFavorite(horoscope.id)
     }
 
     private fun initView(){
