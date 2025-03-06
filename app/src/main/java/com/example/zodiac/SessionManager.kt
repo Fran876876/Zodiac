@@ -19,6 +19,8 @@ class SessionManager(context: Context) {
         val editor = sharedPref.edit()
         editor.putString("FAVORITE_HOROSCOPE", id)
         editor.apply()
+
+        //kjhjkhkjhkh
     }
 
     fun getFavorite(): String {
