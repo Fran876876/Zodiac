@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
-
+                                        //Inicializamos la variable dentro de la clase
     var horoscopeList: List<Horoscope> = Horoscope.horoscopeList
 
+
+    //VARIABLES
     lateinit var recyclerView: RecyclerView
     lateinit var adapter: HoroscopeAdapter
 
@@ -34,8 +36,16 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recyclerView)
 
+        //dentro de la var adapter instanciamos? la clase HoroscopeAdapter recibiendo como parámetro
+        //una lista
+
+           //clase  ->         //paramentro ->
         adapter = HoroscopeAdapter(horoscopeList) { position ->
             val horoscope = horoscopeList[position]
+
+
+
+
 
             //Toast.makeText(this, horoscope.name, Toast.LENGTH_SHORT).show()
             val intent = Intent(this, DetailActivity::class.java)
