@@ -14,9 +14,10 @@ import androidx.core.view.WindowInsetsCompat
 
 class DetailActivity : AppCompatActivity() {
 
-    companion object{
-        const val EXTRA_HOROSCOPE_ID = "HOROSCOPE"
+    companion object {
+        const val EXTRA_HOROSCOPE_ID = "HOROSCOPE_ID"
     }
+
     lateinit var nameTextView: TextView
     lateinit var dateTextView: TextView
     lateinit var iconImageView: ImageView
@@ -29,10 +30,11 @@ class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         enableEdgeToEdge()
 
-
         setContentView(R.layout.activity_detail)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -48,25 +50,21 @@ class DetailActivity : AppCompatActivity() {
 
         loadData()
     }
-      //  findViewById<TextView>(R.id.text).text = "id: ${getString(horoscope.name)}"
 
-        override fun onCreateOptionsMenu(menu: Menu): Boolean{
-            menuInflater.inflate(R.menu.menu_activity_detail, menu)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_detail, menu)
 
-            favoriteMenu = menu.findItem(R.id.action_favorite)
-            setFavoriteIcon()
-            return true
-        }
+        favoriteMenu = menu.findItem(R.id.action_favorite)
+        setFavoriteIcon()
+
+        return true
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_favorite -> {
                 isFavorite = !isFavorite
-                if (isFavorite) {
-                    session.setFavorite(horoscope.id)
-                } else {
-                    session.setFavorite("")
-                }
+                session.setFavorite(horoscope.id, isFavorite)
                 setFavoriteIcon()
                 true
             }
@@ -80,11 +78,15 @@ class DetailActivity : AppCompatActivity() {
                 startActivity(shareIntent)
                 true
             }
+            android.R.id.home -> {
+                finish()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun loadData(){
+    private fun loadData() {
         supportActionBar?.setTitle(horoscope.name)
         supportActionBar?.setSubtitle(horoscope.dates)
 
@@ -95,11 +97,14 @@ class DetailActivity : AppCompatActivity() {
         isFavorite = session.isFavorite(horoscope.id)
     }
 
-    private fun initView(){
+    private fun initView() {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         nameTextView = findViewById(R.id.nameTextView)
-        dateTextView = findViewById(R.id.iconImageView)
+        dateTextView = findViewById(R.id.dateTextView)
         iconImageView = findViewById(R.id.iconImageView)
     }
+
     private fun setFavoriteIcon() {
         if (isFavorite) {
             favoriteMenu.setIcon(R.drawable.ic_favorite_selected)
@@ -107,5 +112,4 @@ class DetailActivity : AppCompatActivity() {
             favoriteMenu.setIcon(R.drawable.ic_favorite)
         }
     }
-
 }
