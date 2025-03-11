@@ -22,8 +22,8 @@
 
         <ImageView
             android:id="@+id/favoriteImageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_favorite_selected"
             app:tint="@color/favorite"
             android:layout_gravity="end|bottom"/>

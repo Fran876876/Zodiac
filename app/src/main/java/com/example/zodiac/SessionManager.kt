@@ -14,10 +14,13 @@ class SessionManager(context: Context) {
     private val sharedPref = context.getSharedPreferences("zodiac_session", Context.MODE_PRIVATE)
 
     fun setFavorite(id: String, favorite: Boolean) {
-        val editor = sharedPref.edit()
-        editor.putBoolean("${id}_favorite", favorite)
-        editor.apply()
+
+        val editor = sharedPref.edit()  //edita las preferencias compartidas,
+                                        // lo que permite modificar los valores almacenados.
+        editor.putBoolean("${id}_favorite", favorite) //almacena el dato elegido en un booleano
+        editor.apply() // guardar el cambio
     }
+
     fun setHated(id: String, hated: Boolean) {
         val editor = sharedPref.edit()
         editor.putBoolean("${id}_hated", hated)
